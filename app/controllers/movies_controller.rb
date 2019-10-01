@@ -27,7 +27,7 @@ class MoviesController < ApplicationController
   
   def index
     @all_ratings = ['G','PG','PG-13','R']
-    session[:ratings] = params[:ratings] unless params[:ratings].nil?
+    session[:ratings] = params[:ratings].keys unless params[:ratings].nil?
     session[:order] = params[:order] unless params[:order].nil?
 
     if (params[:ratings].nil? && !session[:ratings].nil?) || (params[:order].nil? && !session[:order].nil?)
