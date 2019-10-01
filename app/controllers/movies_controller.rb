@@ -20,13 +20,13 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.possible_ratings
     @sort = params[:sort] || session[:sort]
     if params[:ratings].nil? 
-      @param =['G','PG','PG-13','R']
+      @param =session[:ratings] ||{'G'=>"1",'PG'=>"1",'PG-13'=>"1",'R'=>"1"}
     else
-      @param = params[:ratings].keys 
+      @param = params[:ratings] ||session[:ratings]
     end
     session[:sort] = @sort
-    #session[:ratings] = @param
-    @movies=Movie.where(rating: @param).order(@sort)
+    session[:ratings] = @param
+    @movies=Movie.where(rating: @param.keys).order(@sort)
   end
     
   #  @all_ratings = Movie.possible_ratings
