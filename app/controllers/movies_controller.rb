@@ -12,21 +12,31 @@ class MoviesController < ApplicationController
 
   def index
     @all_ratings = Movie.possible_ratings
-    @sort = params[:sort] ||session[:sort]
-    if params[:ratings].nil?
-      session[:ratings] = session[:ratings] || {'G'=>"1",'PG'=>"1",'PG-13'=>"1",'R'=>"1"}
+    @sort = params[:sort]
+    if params[:ratings].nil? 
+      @param = @all_ratings
     else
-      session[:ratings] = params[:ratings]|| session[:ratings] || {'G'=>"1",'PG'=>"1",'PG-13'=>"1",'R'=>"1"}
+      @param = params[:ratings].keys
     end
-    session[:sort] = @sort #incase the sort changed
-    
-    if(params[:sort].nil? && !(session[:sort].nil?)) || (params[:ratings].nil? && !(session[:ratings].nil?)) 
-      flash.keep
-      redirect_to movies_path(sort: session[:sort], ratings: session[:ratings])
-    else
-      @movies = Movie.with_ratings(rating: session[:ratings].keys).order(session[:sort])
-    end
+    @movies=Movie.where(rating: @param).order(@sort)
   end
+    
+  #  @all_ratings = Movie.possible_ratings
+   # @sort = params[:sort] ||session[:sort]
+  #  if params[:ratings].nil?
+  #    session[:ratings] = session[:ratings] || {'G'=>"1",'PG'=>"1",'PG-13'=>"1",'R'=>"1"}
+  #  else
+  #    session[:ratings] = params[:ratings]|| session[:ratings] || {'G'=>"1",'PG'=>"1",'PG-13'=>"1",'R'=>"1"}
+  #  end
+  #  session[:sort] = @sort #incase the sort changed
+  #  
+  #  if(params[:sort].nil? && !(session[:sort].nil?)) || (params[:ratings].nil? && !(session[:ratings].nil?)) 
+  #    flash.keep
+  #    redirect_to movies_path(sort: session[:sort], ratings: session[:ratings])
+  #  else
+  #    @movies = Movie.with_ratings(rating: session[:ratings].keys).order(session[:sort])
+  #  end
+  #end
   
   
  
