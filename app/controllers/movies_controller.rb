@@ -16,11 +16,9 @@ class MoviesController < ApplicationController
     session[:ratings] = params[:ratings]|| session[:ratings] || @all_ratings
     session[:sort] = @sort #incase the sort changed
     
-    
     if(params[:sort].nil? && !(session[:sort].nil?)) || (params[:ratings].nil? && !(session[:ratings].nil?)) 
       flash.keep
       redirect_to movies_path(sort: session[:sort], ratings: session[:ratings])
-     
     else
       @movies = Movie.with_ratings(rating: session[:ratings].keys).order(session[:sort])
     end
