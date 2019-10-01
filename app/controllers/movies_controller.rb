@@ -24,6 +24,7 @@ class MoviesController < ApplicationController
     else
       @param = params[:ratings]
     end
+    session[:ratings] = @param
     session[:sort] = @sort
     #session[:ratings] = @param
     @movies=Movie.where(rating: @param.keys).order(@sort)
