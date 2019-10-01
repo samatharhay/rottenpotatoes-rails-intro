@@ -19,11 +19,12 @@ class MoviesController < ApplicationController
   def index
     @all_ratings = Movie.possible_ratings
     @sort = params[:sort] || session[:sort]
-    if params[:ratings].nil? 
-      @param ={'G'=>"1",'PG'=>"1",'PG-13'=>"1",'R'=>"1"}
-    else
-      @param = params[:ratings]
-    end
+    #if params[:ratings].nil? 
+      #@param =session[:ratings]{'G'=>"1",'PG'=>"1",'PG-13'=>"1",'R'=>"1"}
+    #else
+     # @param = params[:ratings]
+    #end
+    @param = params[:ratings] || session[:ratings] ||{'G'=>"1",'PG'=>"1",'PG-13'=>"1",'R'=>"1"}
     session[:ratings] = @param
     session[:sort] = @sort
     #session[:ratings] = @param
